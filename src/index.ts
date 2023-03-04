@@ -3,18 +3,18 @@ import ApiClient, {
   QueryParamsType,
   setFetch,
 } from 'simple-api-client'
-import validateOauth, { OauthSession } from './validateOauth'
-import validateSession, { SessionType } from './validateSession'
+import validateOauth, { OauthSession } from './validateOauth.js'
+import validateSession, { SessionType } from './validateSession.js'
 
 import BaseError from 'baseerr'
-import { EightSleepAppApi } from './EightSleepAppApi'
+import { EightSleepAppApi } from './EightSleepAppApi.js'
 import fetch from 'cross-fetch'
 import memoizeConcurrent from 'memoize-concurrent'
 import stringify from 'fast-safe-stringify'
-import validateDevice from './validateDevice'
-import validateUser from './validateUser'
+import validateDevice from './validateDevice.js'
+import validateUser from './validateUser.js'
 
-export { Sides } from './EightSleepAppApi'
+export { Sides } from './EightSleepAppApi.js'
 
 type LoginType = {
   email: string
@@ -146,24 +146,22 @@ export default class EightSleepClientApi extends ApiClient {
     return this.session
   }
 
-  oauth = memoizeConcurrent(
-    async (): Promise<OauthSession> => {
-      if (this.oauthClient == null) {
-        throw new BaseError('missing oauth client info')
-      }
-      if (this.oauthSession != null) return await this.refreshOauth()
+  oauth = memoizeConcurrent(async (): Promise<OauthSession> => {
+    if (this.oauthClient == null) {
+      throw new BaseError('missing oauth client info')
+    }
+    if (this.oauthSession != null) return await this.refreshOauth()
 
-      const json = await this.post('users/oauth-token', {
-        json: {
-          client_id: this.oauthClient.id,
-          client_secret: this.oauthClient.secret,
-        },
-      })
+    const json = await this.post('users/oauth-token', {
+      json: {
+        client_id: this.oauthClient.id,
+        client_secret: this.oauthClient.secret,
+      },
+    })
 
-      this.oauthSession = validateOauth(json)
-      return this.oauthSession
-    },
-  )
+    this.oauthSession = validateOauth(json)
+    return this.oauthSession
+  })
 
   getAppApiClient(): EightSleepAppApi {
     if (!this.appApiClient) {

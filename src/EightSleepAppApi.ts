@@ -1,8 +1,8 @@
 import ApiClient, { ExtendedRequestInit } from 'simple-api-client'
 
-import EightSleepClientApi from './index'
+import EightSleepClientApi from './index.js'
 import { StatusCodeError } from 'simple-api-client'
-import validateDeviceStatus from './validateDeviceStatus'
+import validateDeviceStatus from './validateDeviceStatus.js'
 
 export enum Sides {
   SOLO = 'solo',

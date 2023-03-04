@@ -1,6 +1,6 @@
 import BaseError from 'baseerr'
-import { Levels } from './EightSleepAppApi'
-import { getSoloDeviceStatus } from './__tests__/__fixtures__/deviceStatusResponse'
+import { Levels } from './EightSleepAppApi.js'
+import { getSoloDeviceStatus } from './__tests__/__fixtures__/deviceStatusResponse.js'
 
 export type SideStatusType =
   | {
@@ -59,12 +59,8 @@ export function validateSideStatus(sideStatus: any): SideStatusType {
   if (typeof sideStatus != 'object') {
     throw new InvalidSideStatusError('invalid side status', { sideStatus })
   }
-  const {
-    currentActivity,
-    currentLevel,
-    currentTargetLevel,
-    version,
-  } = sideStatus
+  const { currentActivity, currentLevel, currentTargetLevel, version } =
+    sideStatus
   if (typeof currentActivity !== 'string')
     throw new InvalidSideStatusError('invalid currentActivity', { sideStatus })
   if (typeof currentLevel !== 'number')

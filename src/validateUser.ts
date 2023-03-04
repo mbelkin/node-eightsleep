@@ -1,7 +1,7 @@
 import BaseError from 'baseerr'
-import { Features } from './validateDevice'
+import { Features } from './validateDevice.js'
 import { isString } from 'util'
-import isValueOf from './isValueOf'
+import isValueOf from './isValueOf.js'
 
 enum Genders {
   'MALE' = 'male',
